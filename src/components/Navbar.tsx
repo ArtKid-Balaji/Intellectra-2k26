@@ -22,10 +22,15 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "py-4 bg-cyber-dark/80 backdrop-blur-lg border-b border-white/5" : "py-8 bg-transparent"}`}>
-      <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
+   <nav
+  className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 transform-gpu will-change-transform ${
+    isScrolled
+      ? "py-4 bg-cyber-dark/90 backdrop-blur-md"
+      : "py-8 bg-transparent"
+  }`}
+>    <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
         <a href="#home" className="text-2xl font-display font-bold text-white tracking-tighter">
-          INTELLECTRA<span className="text-neon-cyan">  2K26</span>
+          APEC <span className="text-neon-cyan"> MELMARUVATHUR </span>
         </a>
 
         {/* Desktop Nav */}

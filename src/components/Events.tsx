@@ -32,14 +32,14 @@ const events: Event[] = [
     id: "innovation-meet",
     title: "INNOVATION MEET",
     description: "Present your groundbreaking ideas and projects to the industry experts.",
-    rules: ["Team of 2-3 members", "Abstract submission required", "Presentation duration: 10 mins"],
+    rules: ["Team of 2-3 members", "PPT should be submitted before event", "Presentation duration: 10 mins"],
     icon: Lightbulb,
     type: 'tech'
   },
   {
     id: "neurolink",
     title: "NEUROLINK",
-    description: "A fast-paced technical quiz that covers the latest trends in IT.",
+    description: "Teams solve puzzles by connecting ideas, concepts correctly. It tests your logical thinking, teamwork and problem-solving skills.",
     rules: ["Individual or Team of 2", "Buzzer rounds", "General IT knowledge"],
     icon: Users,
     type: 'non-tech'
@@ -55,8 +55,8 @@ const events: Event[] = [
   {
     id: "strategic-simulation",
     title: "STRATEGIC SIMULATION",
-    description: "A management-style event to test your decision-making and strategy.",
-    rules: ["Team of 2 members", "Case study analysis", "Crisis management rounds"],
+    description: "Teams take on roles of IT concepts.They act out tasks to show how these concepts work in a fun and creative way.",
+    rules: ["Team of 3 members", "Case study analysis", "Crisis management rounds"],
     icon: Target,
     type: 'non-tech'
   }
@@ -66,31 +66,52 @@ export const Events = () => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   const EventCard: React.FC<{ event: Event }> = ({ event }) => (
-    <motion.div
-      layoutId={event.id}
-      onClick={() => setSelectedEvent(event)}
-      whileHover={{ y: -10, scale: 1.02 }}
-      className="glass-card p-8 rounded-2xl cursor-pointer group relative overflow-hidden"
-    >
-      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-        <event.icon className="w-24 h-24 text-neon-cyan" />
-      </div>
-      
-      <div className="relative z-10">
-        <div className="w-12 h-12 rounded-lg bg-neon-cyan/10 flex items-center justify-center mb-6 border border-neon-cyan/20 group-hover:bg-neon-cyan group-hover:text-cyber-dark transition-all duration-300">
-          <event.icon className="w-6 h-6" />
-        </div>
-        <h3 className="text-2xl font-display font-bold text-white mb-3 group-hover:text-neon-cyan transition-colors">
-          {event.title}
-        </h3>
-        <p className="text-white text-sm leading-relaxed mb-6">
-          {event.description}
-        </p>
-        <div className="flex items-center text-xs font-mono tracking-widest text-neon-cyan uppercase">
-          View Details <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
-        </div>
-      </div>
-    </motion.div>
+ <motion.div
+  layoutId={event.id}
+  onClick={() => setSelectedEvent(event)}
+  whileHover={{ y: -10, scale: 1.02 }} 
+  className="glass-card p-8 rounded-2xl cursor-pointer relative overflow-hidden"
+>
+  {/* Background Large Icon */}
+  <div className="absolute top-0 right-0 p-4 opacity-20">
+    <event.icon
+      className="w-24 h-24 text-neon-cyan"
+      style={{
+        filter: "drop-shadow(0 0 25px #00ffff)"
+      }}
+    />
+  </div>
+
+  <div className="relative z-10">
+    {/* Small Icon Box */}
+    <div className="w-12 h-12 rounded-lg 
+                    bg-neon-cyan/20 
+                    flex items-center justify-center 
+                    mb-6 
+                    border border-neon-cyan/40
+                    shadow-[0_0_20px_rgba(0,255,255,0.4)]">
+
+      <event.icon
+        className="w-6 h-6 text-neon-cyan"
+        style={{
+          filter: "drop-shadow(0 0 10px #00ffff)"
+        }}
+      />
+    </div>
+
+    <h3 className="text-2xl font-display font-bold text-white mb-3">
+      {event.title}
+    </h3>
+
+    <p className="text-white text-sm leading-relaxed mb-6">
+      {event.description}
+    </p>
+
+    <div className="flex items-center text-xs font-mono tracking-widest text-neon-cyan uppercase">
+      View Details →
+    </div>
+  </div>
+</motion.div>
   );
 
   return (

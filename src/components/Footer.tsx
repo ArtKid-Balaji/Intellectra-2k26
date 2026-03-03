@@ -2,45 +2,44 @@ import { Phone } from "lucide-react";
 
 export const Footer = () => {
   return (
-    <footer className="py-16 px-4 border-t border-white/10 relative">
+    <footer className="py-6 px-4 border-t border-white/10 relative">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
 
-          {/* ================= LEFT SIDE ================= */}
-          <div className="space-y-10">
+      {/* ================= LEFT SIDE ================= */}
+<div className="space-y-3 mt-2 md:mt-0">
+  <h3 className="text-3xl font-display font-bold">
+                    <span className="text-neon-cyan"> LEADERSHIP</span>
 
-            {/* Staff Coordinator */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center">
-                <Phone className="w-5 h-5 text-slate-400" />
-              </div>
-              <div>
-                <p className="text-white font-medium">
-                  Vanmathi – Staff Coordinator
-                </p>
-                <p className="text-slate-400 text-sm">
-                  +91 XXXXX XXXXX
-                </p>
-              </div>
-            </div>
+  </h3>
 
-            {/* Convener */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center">
-                <Phone className="w-5 h-5 text-slate-400" />
-              </div>
-              <div>
-                <p className="text-white font-medium">
-                  Lavanya – Convener
-                </p>
-                <p className="text-slate-400 text-sm">
-                  +91 XXXXX XXXXX
-                </p>
-              </div>
-            </div>
+  <div>
+    <p className="text-white font-semibold">
+      Dr. A. Bhuvaneshwari
+    </p>
+    <p className="text-slate-400 text-sm">
+      HOD / IT & Vice Principal
+    </p>
+  </div>
 
-          </div>
+  <div>
+    <p className="text-white font-semibold">
+      Dr. J. Raja
+    </p>
+    <p className="text-slate-400 text-sm">
+      Principal
+    </p>
+  </div>
 
+  <div>
+    <p className="text-white font-semibold">
+      Dr. V. Ramasamy
+    </p>
+    <p className="text-slate-400 text-sm">
+      Dean
+    </p>
+  </div>
+</div>
           {/* ================= RIGHT SIDE ================= */}
           <div className="md:text-right space-y-6">
 
@@ -58,13 +57,12 @@ export const Footer = () => {
             </div>
 
             <div>
-              <p className="text-white text-sm">
-                © 2026 INTELLECTRA. All rights reserved.
+              <p className="text-white text-m">
+                © 2026 INTELLECTRA . All Rights Reserved.
               </p>
 
               <p className="text-xs font-mono text-white uppercase tracking-widest mt-3">
-                Designed with
-                Love for Innovation
+                Designed & Developed by Balaji
               </p>
             </div>
 

@@ -24,7 +24,7 @@ export const Hero = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card border-neon-cyan/20 mb-8"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card border-neon-cyan/20 mb-5"
         >
           <Cpu className="w-4 h-4 text-neon-cyan animate-pulse" />
           <span className="text-xs font-mono tracking-widest text-neon-cyan uppercase">
@@ -44,7 +44,7 @@ export const Hero = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
            className="text-6xl md:text-8xl lg:text-2xl font-display font-bold tracking-tighter text-white mb-6 leading-none">
-          “Ignite Innovation. Engineer the Future.”
+          “ Welcome to the Grand Arena of Innovation ”
         </motion.p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">

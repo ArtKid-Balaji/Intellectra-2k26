@@ -43,13 +43,13 @@ export const Registration = () => {
             <ExternalLink className="w-6 h-6" />
           </motion.a>
 
-          <div className="mt-12 flex flex-wrap justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all">
+          <div className="mt-12 flex flex-wrap justify-center gap-8 ">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500" />
+              <div className="w-2 h-2 rounded-full bg-green-500 opacity-50" />
               <span className="text-s text-white font-mono uppercase tracking-widest">Registration Open</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-red-500" />
+              <div className="w-2 h-2 rounded-full bg-red-500 opacity-50" />
               <span className="text-s font-mono uppercase tracking-widest">Limited Slots</span>
             </div>
           </div>

@@ -10,7 +10,7 @@ export const CountdownTimer = () => {
   });
 
   useEffect(() => {
-    const targetDate = new Date("2026-03-14T09:00:00").getTime();
+    const targetDate = new Date("2026-03-13T23:59:59").getTime();
 
     const interval = setInterval(() => {
       const now = new Date().getTime();
@@ -59,6 +59,10 @@ export const CountdownTimer = () => {
   14 <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-blue">
     March 2026
   </span> 
+  </p>
+  {/* end of date */}
+    <p className="text-2xl md:text-3xl font-display font-bold tracking-tight text-white mb-6">
+Online Registration Closes In
 </p>
 
     {/* Countdown Grid */}
