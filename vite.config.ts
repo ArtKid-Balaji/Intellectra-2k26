@@ -7,5 +7,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  base: "/Intellectra2k26/",
+  base: "/Intellectra-2k26/",
 })
