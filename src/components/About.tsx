@@ -84,7 +84,7 @@ export const About = () => {
           >
             <div className="absolute -inset-4 bg-neon-cyan/20 rounded-[40px] blur-2xl -z-10" />
    <img
-  src="public/images/intellectra-2k26.jpg"
+  src="https://i.ibb.co/MkSs7NxG/intellectra-2k26.jpg"
   alt="INTELLECTRA 2K26"
   className="rounded-[32px] border border-white/10 shadow-2xl"
 />
