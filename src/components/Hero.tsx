@@ -45,8 +45,8 @@ export const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-           className="text-6xl md:text-8xl lg:text-2xl font-display font-bold tracking-tighter text-white mb-6 leading-none">
-          “ Welcome to the Grand Arena of Innovation ”
+           className="text-xl sm:text-2xl md:text-3xl font-display font-bold tracking-tight text-white mb-6 leading-snug max-w-3xl mx-auto px-2">
+          "Welcome To The Grand Arena Of Innovation"
         </motion.p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -76,3 +76,4 @@ export const Hero = () => {
     </section>
   );
 };
+

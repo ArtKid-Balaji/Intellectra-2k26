@@ -28,9 +28,9 @@ export const Navbar = () => {
       ? "py-4 bg-cyber-dark/90 backdrop-blur-md"
       : "py-8 bg-transparent"
   }`}
->    <div className="max-w-7xl mx-auto px-4 flex items-center justify-between">
-        <a href="#home" className="text-2xl font-display font-bold text-white tracking-tighter">
-          APEC <span className="text-neon-cyan"> MELMARUVATHUR </span>
+>    <div className="max-w-7xl mx-auto px-4 flex items-center justify-between gap-3">
+        <a href="#home" className="text-base sm:text-2xl font-display font-bold text-white tracking-tight leading-tight max-w-[80%] sm:max-w-none">
+          APEC <span className="text-neon-cyan">MELMARUVATHUR</span>
         </a>
 
         {/* Desktop Nav */}

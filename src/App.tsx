@@ -17,7 +17,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen max-w-full overflow-x-clip">
       <AnimatePresence>
         {isLoading && (
           <LoadingScreen onComplete={() => setIsLoading(false)} />
@@ -74,7 +74,7 @@ function MouseGlow() {
 
   return (
     <div
-      className="w-[600px] h-[600px] bg-neon-cyan/5 rounded-full blur-[100px] absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out"
+      className="w-[320px] h-[320px] sm:w-[600px] sm:h-[600px] bg-neon-cyan/5 rounded-full blur-[100px] absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-300 ease-out"
       style={{ left: mousePos.x, top: mousePos.y }}
     />
   );

@@ -12,6 +12,14 @@
 }
 
 @layer base {
+  html,
+  body,
+  #root {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
   body {
     @apply bg-cyber-dark text-slate-200 font-sans selection:bg-neon-cyan/30 selection:text-neon-cyan;
     overflow-x: hidden;

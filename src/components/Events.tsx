@@ -16,7 +16,7 @@ const events: Event[] = [
     id: "prompt-stack",
     title: "PROMPT STACK",
     description: "Design and develop a creative website using modern tools and AI-driven prompts to showcase innovation and functionality.",
-    rules: ["Team of 2-3 members", "Tools: React, Vue, or modern frameworks", "AI integration required"],
+    rules: ["Duration: 2 Hours", "vibe coding", "AI integration required"],
     icon: Zap,
     type: 'tech'
   },
@@ -24,7 +24,7 @@ const events: Event[] = [
     id: "codesmith",
     title: "CODESMITH",
     description: "Test your debugging and coding skills by identifying errors and crafting efficient solutions under pressure.",
-    rules: ["Individual participation", "Languages: C, C++, Java, Python", "Duration: 2 Hours"],
+    rules: [" No malpractice or copying", "Languages: Java, Python", "Duration: 2 Hours"],
     icon: Code,
     type: 'tech'
   },
@@ -32,7 +32,7 @@ const events: Event[] = [
     id: "innovation-meet",
     title: "INNOVATION MEET",
     description: "Present your ideas, research, or projects and impress the judges with your innovation and presentation skills.",
-    rules: ["Team of 2-3 members", "PPT should be submitted before event", "Presentation duration: 10 mins"],
+    rules: ["Team of 3-4 members", "PPT should be submitted before event", "Presentation duration: 10 mins"],
     icon: Lightbulb,
     type: 'tech'
   },
@@ -40,7 +40,7 @@ const events: Event[] = [
     id: "infographix",
     title: "INFOGRAPHIX",
     description: "Create visually appealing posters to communicate ideas effectively through design, creativity, and clarity.",
-    rules: ["Individual participation", "Topic will be given on-spot", "Tools: Canva, Photoshop, etc."],
+    rules: ["Duration: 2 Hours", "Topic will be given on-spot", "Tool: Canva "],
     icon: Layout,
     type: 'tech'
   },
@@ -64,7 +64,7 @@ const events: Event[] = [
     id: "neurolink",
     title: "NEUROLINK",
     description: "Test your logical thinking by connecting clues, patterns, and ideas in a fast-paced brain game.",
-    rules: ["Individual or Team of 2", "Buzzer rounds", "Pattern and logic-based challenges"],
+    rules: ["Individual", "Buzzer rounds", "Pattern and logic-based challenges"],
     icon: Brain,
     type: 'non-tech'
   },
@@ -72,7 +72,7 @@ const events: Event[] = [
     id: "auction-arena",
     title: "AUCTION ARENA",
     description: "Build your dream cricket team through strategic bidding and compete based on performance and decision-making.",
-    rules: ["Team of 2 members", "Auction-based bidding system", "Virtual cricket matches"],
+    rules: ["Team of 2-4 members", "Auction-based bidding system", "Strategic team building"],
     icon: Trophy,
     type: 'non-tech'
   }

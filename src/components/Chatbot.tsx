@@ -7,81 +7,40 @@ interface Message {
   content: string;
 }
 
-const SYSTEM_PROMPT = `You are a helpful assistant for INTELLECTRA 2K26, a National-level Technical Symposium organized by the IT Department at Adhiparasakthi Engineering College.
+const CHATBOT_UNAVAILABLE_MESSAGE =
+  "The chatbot is not available on this hosted version right now. This site appears to be deployed without the server API needed for chat.";
 
-EVENT INFORMATION:
-- Name: INTELLECTRA 2K26
-- Type: National-level Technical Symposium
-- Organizer: Department of Information Technology, Adhiparasakthi Engineering College
-- Participants: 100+ from 15+ colleges
-- Number of Events: 8
+const CHATBOT_SERVER_ERROR_MESSAGE =
+  "The chatbot is temporarily unavailable on the hosted site right now. Please try again later, or redeploy with a valid GEMINI_API_KEY configured on the server.";
 
-TECHNICAL EVENTS:
-1. PROMPT STACK
-   - Design and develop a creative website using modern tools and AI-driven prompts to showcase innovation and functionality
-   - Team of 2-3 members
-   - Tools: React, Vue, or modern frameworks
-   - AI integration required
+const getFriendlyChatError = (errorMessage: string) => {
+  if (errorMessage === "Failed to fetch") {
+    return "Failed to connect to the chatbot server. If you're developing locally, please use 'vercel dev' instead of 'npm run dev' to enable the API routes.";
+  }
 
-2. CODESMITH
-   - Test your debugging and coding skills by identifying errors and crafting efficient solutions under pressure
-   - Individual participation
-   - Languages: C, C++, Java, Python
-   - Duration: 2 Hours
+  if (errorMessage.includes("API key is not configured")) {
+    return "Chatbot API key is missing on the deployed server. Add GEMINI_API_KEY in your hosting provider settings and redeploy.";
+  }
 
-3. INNOVATION MEET
-   - Present your ideas, research, or projects and impress the judges with your innovation and presentation skills
-   - Team of 2-3 members
-   - PPT must be submitted before event
-   - Presentation duration: 10 minutes
+  if (
+    errorMessage.includes("Server Error (404)") ||
+    errorMessage.includes("Server Error (405)") ||
+    errorMessage.includes("<!DOCTYPE html") ||
+    errorMessage.includes("<html")
+  ) {
+    return CHATBOT_UNAVAILABLE_MESSAGE;
+  }
 
-NON-TECHNICAL EVENTS:
-4. INFOGRAPHIX
-   - Create visually appealing posters to communicate ideas effectively through design, creativity, and clarity
-   - Individual participation
-   - Topic given on-spot
-   - Tools: Canva, Photoshop, etc.
+  if (
+    errorMessage.includes("Server Error (500)") ||
+    errorMessage.includes("Connection error (500)") ||
+    errorMessage.includes("Server returned 500")
+  ) {
+    return CHATBOT_SERVER_ERROR_MESSAGE;
+  }
 
-5. BOOYAH BATTLE
-   - Compete in an intense Free Fire tournament and prove your squad survival and combat skills
-   - Team of 4 members
-   - Multiple rounds and playoffs
-   - Best squad tactics win
-
-6. CHECKMATE CLASH
-   - Challenge your opponents in a strategic chess battle and showcase your tactical thinking
-   - Individual participation
-   - Knockout rounds
-   - Standard chess rules
-
-7. NEUROLINK
-   - Test your logical thinking by connecting clues, patterns, and ideas in a fast-paced brain game
-   - Individual or Team of 2
-   - Buzzer rounds
-   - Pattern and logic-based challenges
-
-8. AUCTION ARENA
-   - Build your dream cricket team through strategic bidding and compete based on performance and decision-making
-   - Team of 2 members
-   - Auction-based bidding system
-   - Virtual cricket matches
-
-EVENT SCHEDULE:
-- 09:00 AM: On Spot Registration
-- 09:30 AM: Inauguration Ceremony
-- 10:00 AM: Refreshments and snacks
-- 10:30 AM: Technical Events
-- 01:00 PM: Lunch Break
-- 02:00 PM: Non-Technical Events
-- 03:00 PM: Prize Distribution
-
-REWARDS:
-- Cash Prizes for well-performing teams
-- Certificate of Recognition for winners
-- E-Certificates for all participants
-- Elite Networking opportunity with innovators, coders, and creators
-
-Be friendly, helpful, and conversational. Answer questions about the event, its events, schedule, requirements, rewards, and registration. If asked something not related to the event, politely redirect the conversation back to the event.`;
+  return `Sorry, the chatbot ran into a problem: ${errorMessage}`;
+};
 
 export const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -114,47 +73,30 @@ export const Chatbot = () => {
     setIsLoading(true);
 
     try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-      
-      if (!apiKey) {
-        throw new Error("API key is not configured. Please add VITE_GEMINI_API_KEY to your .env file.");
-      }
-
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            system_instruction: {
-              parts: [{ text: SYSTEM_PROMPT }],
-            },
-            contents: messages
-              .concat({ role: "user", content: userMessage })
-              .map((msg) => ({
-                role: msg.role === "user" ? "user" : "model",
-                parts: [
-                  {
-                    text: msg.content,
-                  },
-                ],
-              })),
-          }),
-        }
-      );
+      // Call serverless function instead of Gemini API directly
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: messages.concat({ role: "user", content: userMessage }),
+        }),
+      });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        console.error("API Error Response:", errorData);
-        throw new Error(`API Error: ${response.status} - ${errorData?.error?.message || 'Unknown error'}`);
+        const text = await response.text();
+        console.error("API Error Response body:", text);
+        try {
+          const errorData = JSON.parse(text);
+          throw new Error(errorData?.error || `Server returned ${response.status}`);
+        } catch (e) {
+          throw new Error(`Server Error (${response.status}): ${text.substring(0, 100)}...`);
+        }
       }
 
       const data = await response.json();
-      const assistantMessage =
-        data.candidates?.[0]?.content?.parts?.[0]?.text ||
-        "I couldn't process that. Please try again.";
+      const assistantMessage = data.message || "I couldn't process that. Please try again.";
 
       setMessages((prev) => [
         ...prev,
@@ -162,12 +104,14 @@ export const Chatbot = () => {
       ]);
     } catch (error) {
       console.error("Chat error:", error);
-      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+      let errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+      errorMessage = getFriendlyChatError(errorMessage);
+
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: `Error: ${errorMessage}`,
+          content: errorMessage,
         },
       ]);
     } finally {
@@ -180,11 +124,11 @@ export const Chatbot = () => {
       {/* Chat Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-8 right-8 w-14 h-14 rounded-full bg-gradient-to-r from-neon-cyan to-neon-blue shadow-lg shadow-neon-cyan/50 flex items-center justify-center text-white z-40 hover:scale-110 transition-transform"
+        className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-r from-neon-cyan to-neon-blue shadow-lg shadow-neon-cyan/50 flex items-center justify-center text-white z-40 hover:scale-110 transition-transform"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
       >
-        <MessageCircle size={24} />
+        <MessageCircle size={22} className="sm:w-6 sm:h-6" />
       </motion.button>
 
       {/* Chat Window */}
@@ -194,24 +138,24 @@ export const Chatbot = () => {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed bottom-24 right-8 w-96 max-h-96 rounded-2xl bg-cyber-dark border border-neon-cyan/30 shadow-2xl shadow-neon-cyan/20 flex flex-col z-40 overflow-hidden"
+            className="fixed inset-x-3 bottom-20 top-16 sm:inset-auto sm:bottom-24 sm:right-8 sm:w-96 sm:h-[32rem] rounded-2xl bg-cyber-dark border border-neon-cyan/30 shadow-2xl shadow-neon-cyan/20 flex flex-col z-40 overflow-hidden"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-neon-cyan/20 to-neon-blue/20 border-b border-neon-cyan/30 p-4 flex items-center justify-between">
+            <div className="bg-gradient-to-r from-neon-cyan/20 to-neon-blue/20 border-b border-neon-cyan/30 p-3 sm:p-4 flex items-center justify-between">
               <div>
-                <h3 className="text-white font-bold">INTELLECTRA Assistant</h3>
+                <h3 className="text-white font-bold text-sm sm:text-base">INTELLECTRA Assistant</h3>
                 <p className="text-xs text-neon-cyan">Ask me anything!</p>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
                 className="text-white hover:text-neon-cyan transition-colors"
               >
-                <X size={20} />
+                <X size={18} className="sm:w-5 sm:h-5" />
               </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-cyber-dark/50">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 bg-cyber-dark/50">
               {messages.map((msg, idx) => (
                 <motion.div
                   key={idx}
@@ -222,7 +166,7 @@ export const Chatbot = () => {
                   }`}
                 >
                   <div
-                    className={`max-w-xs rounded-lg p-3 ${
+                    className={`max-w-[85%] sm:max-w-xs rounded-lg p-3 ${
                       msg.role === "user"
                         ? "bg-neon-cyan/20 text-white border border-neon-cyan/40"
                         : "bg-white/5 text-white/90 border border-white/10"
@@ -253,22 +197,22 @@ export const Chatbot = () => {
             {/* Input */}
             <form
               onSubmit={sendMessage}
-              className="border-t border-neon-cyan/30 p-3 flex gap-2 bg-cyber-dark/80"
+              className="border-t border-neon-cyan/30 p-2 sm:p-3 flex gap-2 bg-cyber-dark/80"
             >
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask something..."
-                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:border-neon-cyan/50"
+                className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base text-white placeholder-white/40 focus:outline-none focus:border-neon-cyan/50"
                 disabled={isLoading}
               />
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className="bg-gradient-to-r from-neon-cyan to-neon-blue p-2 rounded-lg text-white hover:shadow-lg hover:shadow-neon-cyan/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-gradient-to-r from-neon-cyan to-neon-blue p-2 rounded-lg text-white hover:shadow-lg hover:shadow-neon-cyan/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
               >
-                <Send size={20} />
+                <Send size={18} className="sm:w-5 sm:h-5" />
               </button>
             </form>
           </motion.div>
