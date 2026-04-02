@@ -80,7 +80,7 @@ const events: Event[] = [
     id: "auction-arena",
     title: "AUCTION ARENA",
     description: "Build your dream cricket team through strategic bidding and compete based on performance and decision-making.",
-    rules: ["Team of 2-4 members", "Auction-based bidding system", "Strategic team building"],
+    rules: ["Team of 2-4 members", "Auction-based bidding system", "Limited teams only"],
     coordinators: ["SAMYNATHAN V", "JAYENTHIRAN M", "PUNNIYA JANANI B", "NARMADHA P"],
     icon: Trophy,
     type: 'non-tech'
