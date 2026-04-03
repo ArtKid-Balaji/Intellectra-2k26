@@ -3,6 +3,7 @@ import { Shield, Zap, Globe, Award, X } from "lucide-react";
 import { useState } from "react";
 
 export const About = () => {
+  console.log("About component rendered");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const highlights = [
     {
@@ -86,12 +87,12 @@ export const About = () => {
           >
             <div className="absolute -inset-4 bg-neon-cyan/20 rounded-[40px] blur-2xl -z-10" />
             <img
-              src="https://i.ibb.co/wZfcXNhQ/INTELLECTRA-2-K26.jpg"
+              src="https://i.ibb.co/k2z830jt/INTELLECTRA-2-K26-2.jpg"
               alt="INTELLECTRA 2K26"
               className="rounded-[32px] border border-white/10 shadow-2xl cursor-pointer hover:shadow-neon-cyan/50 transition-shadow"
               onClick={() =>
                 setSelectedImage(
-                  "https://i.ibb.co/wZfcXNhQ/INTELLECTRA-2-K26.jpg"
+                  "https://i.ibb.co/k2z830jt/INTELLECTRA-2-K26-2.jpg"
                 )
               }
             />

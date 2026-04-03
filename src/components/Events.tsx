@@ -133,7 +133,7 @@ export const Events = () => {
         </h3>
 
         <div className="flex items-center text-xs font-mono tracking-widest text-neon-cyan uppercase">
-          View Details {"->"}
+          View Details
         </div>
       </div>
     </motion.div>
